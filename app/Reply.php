@@ -19,6 +19,10 @@ class Reply extends Model
         });
 
         static::deleted(function ($reply) {
+//            if ($reply->isBest()) {
+//                $reply->thread->update(['best_reply_id' => null]);
+//            }
+
             $reply->thread->decrement('replies_count');
         });
     }
@@ -39,7 +43,7 @@ class Reply extends Model
      *
      * @var array
      */
-    protected $appends = ['favoritesCount', 'isFavorited'];
+    protected $appends = ['favoritesCount', 'isFavorited', 'isBest'];
 
     /**
      * A reply has an owner.
@@ -80,5 +84,15 @@ class Reply extends Model
     public function getBodyAttribute($body)
     {
         return Purify::clean($body);
+    }
+
+    public function isBest()
+    {
+        return $this->thread->best_reply_id == $this->id;
+    }
+
+    public function getIsBestAttribute()
+    {
+        return $this->isBest();
     }
 }
