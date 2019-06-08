@@ -6,11 +6,12 @@ use App\Events\ThreadHasNewReply;
 use App\Events\ThreadReceivedNewReply;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Laravel\Scout\Searchable;
 use Stevebauman\Purify\Facades\Purify;
 
 class Thread extends Model
 {
-    use RecordsActivity;
+    use RecordsActivity, Searchable;
 
     /**
      * Don't auto-apply mass assignment protection.
@@ -211,5 +212,12 @@ class Thread extends Model
 //        $this->best_reply_id = $reply->id;
 //
 //        $this->save();
+    }
+
+    public function toSearchableArray()
+    {
+//        return ['title' => $this->title];
+
+        return $this->toArray() + ['path' => $this->path()];
     }
 }

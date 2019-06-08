@@ -7,6 +7,10 @@
 
 window.Vue = require('vue');
 
+import InstantSearch from 'vue-instantsearch';
+
+window.Vue.use(InstantSearch);
+
 // a method that we want to share across all Vue instances
 // window.Vue.prototype.authorize = function (handler) {
 //     let user = window.App.user;
@@ -50,6 +54,7 @@ Vue.component('paginator', require('./components/Paginator.vue').default);  // g
 Vue.component('user-notifications', require('./components/UserNotifications.vue').default);  // global component
 Vue.component('avatar-form', require('./components/AvatarForm.vue').default);  // global component
 Vue.component('wysiwyg-editor', require('./components/WysiwygEditor.vue').default);  // global component
+Vue.component('search', require('./components/Search.vue').default);  // global component
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
