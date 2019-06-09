@@ -43,9 +43,15 @@ class CreateThreadsTest extends TestCase
         // and the user is redirected to '/login'
         $this->post('/threads')
             ->assertRedirect('/login');
+    }
 
-        // Re-disable Exception Handling
-        $this->withoutExceptionHandling();
+    /** @test */
+    function unverified_users_may_not_create_threads()
+    {
+        $this->signIn(factory('App\User')->states('unconfirmed')->create());
+
+        $this->get('/threads/create')
+            ->assertRedirect(route('verification.notice'));
 
     }
 
@@ -70,7 +76,7 @@ class CreateThreadsTest extends TestCase
 //    }
 
     /** @test */
-    function an_authenticated_user_can_create_new_forum_threads()
+    function an_authenticated_and_verified_user_can_create_new_forum_threads()
     {
         $response = $this->publishThread(['title' => 'Some Title', 'body' => 'Some body.']);
 

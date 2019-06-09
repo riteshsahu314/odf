@@ -15,12 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::view('scan', 'scan');
-
-Route::get('threads', 'ThreadsController@index')->name('threads');
-Route::get('threads/create', 'ThreadsController@create');
+Route::get('threads/create', 'ThreadsController@create')->middleware('verified');
 Route::get('threads/search', 'SearchController@show');
 Route::get('threads/{channel}', 'ThreadsController@index');
 Route::get('threads/{channel}/{thread}', 'ThreadsController@show');
@@ -55,3 +53,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('api/users', 'Api\UsersController@index');
 Route::post('api/users/{user}/avatar', 'Api\UserAvatarController@store')->middleware('auth')->name('avatar');
+Route::get('threads', 'ThreadsController@index')->name('threads');
+
