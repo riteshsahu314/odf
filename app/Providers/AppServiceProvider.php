@@ -29,6 +29,10 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191); //NEW: Increase StringLength
 
+        if (env('APP_ENV') === 'production') {
+            $this->app['url']->forceScheme('https');
+        }
+
         \View::composer('*', function ($view) {
             $channels = \Cache::rememberForever('channels', function () {
                 return Channel::all( );
