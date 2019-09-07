@@ -3,13 +3,14 @@
         <div class="col-md-4">
             <ais-configure :query="query"/>
 
-            <div class="card">
+            <div class="card mb-2">
                 <div class="card-header">
                     Search
                 </div>
                 <div class="card-body">
                     <ais-search-box placeholder="Find a thread..." :autofocus="true" />
                 </div>
+                <img src="https://odf-bucket.s3.ap-south-1.amazonaws.com/images/algolia.svg" alt="algolia logo" class="w-75 mx-auto pb-3">
             </div>
 
             <div class="card">
@@ -45,8 +46,8 @@
         data() {
             return {
                 searchClient: algoliasearch(
-                    'MH3XVJMFES',
-                    '3ed3dddbaa73857e0a8cb5c2500d537e'
+                    'DOZ621768P',
+                    '4af27885f4ad89fa8ac81452a8fda9f8'
                 ),
             };
         },

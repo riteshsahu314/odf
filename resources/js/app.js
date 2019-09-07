@@ -48,6 +48,8 @@ require('./bootstrap');
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
+Vue.config.ignoredElements = ['trix-editor'];
+
 Vue.component('flash', require('./components/Flash.vue').default);  // global component
 Vue.component('thread-view', require('./pages/Thread.vue').default);  // global component
 Vue.component('paginator', require('./components/Paginator.vue').default);  // global component
@@ -55,6 +57,8 @@ Vue.component('user-notifications', require('./components/UserNotifications.vue'
 Vue.component('avatar-form', require('./components/AvatarForm.vue').default);  // global component
 Vue.component('wysiwyg-editor', require('./components/WysiwygEditor.vue').default);  // global component
 Vue.component('search', require('./components/Search.vue').default);  // global component
+Vue.component('chart', require('./components/Chart.vue').default);  // global component
+Vue.component('scroll-to', require('./components/ScrollTo.vue').default);  // global component
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

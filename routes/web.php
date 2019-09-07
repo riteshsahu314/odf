@@ -17,7 +17,41 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true]);
 
-Route::view('scan', 'scan');
+// Admin Routes
+Route::prefix('admin')->group(function () {
+
+    Route::get('/', 'AdminController@index');
+
+    Route::name('admin.')->group(function () {
+        // users
+        Route::resource('users', 'AdminUsersController')->except('show');
+//        Route::get('users', 'AdminUsersController@index')->name('users');
+//        Route::get('users/create', 'AdminUsersController@create')->name('users.create');
+//        Route::post('users', 'AdminUsersController@store')->name('users.store');
+//        Route::delete('users/{user}', 'AdminUsersController@destroy')->name('users.destroy');
+//        Route::get('users/{user}/edit', 'AdminUsersController@edit')->name('users.edit');
+//        Route::patch('users/{user}', 'AdminUsersController@update')->name('users.update');
+
+        // channels
+        Route::resource('channels', 'AdminChannelsController')->except('show');
+
+        // threads
+        Route::resource('threads', 'AdminThreadsController')->except('show', 'create', 'store');
+//        Route::get('threads', 'AdminThreadsController@index')->name('threads');
+//        Route::delete('threads/{channel}/{thread}', 'AdminThreadsController@destroy')->name('threads.destroy');
+//        Route::get('threads/{channel}/{thread}/edit', 'AdminThreadsController@edit')->name('threads.edit');
+//        Route::patch('threads/{channel}/{thread}', 'AdminThreadsController@update')->name('threads.update');
+
+        // replies
+        Route::resource('replies', 'AdminRepliesController')->except(['create', 'store', 'show']);
+
+        // subscriptions
+        Route::get('subscriptions', 'AdminSubscriptionsController@index')->name('subscriptions.index');
+        Route::delete('subscriptions/{threadSubscription}', 'AdminSubscriptionsController@destroy')->name('subscriptions.destroy');
+    });
+});
+
+// User Routes
 Route::get('threads/create', 'ThreadsController@create')->middleware('verified');
 Route::get('threads/search', 'SearchController@show');
 Route::get('threads/{channel}', 'ThreadsController@index');
@@ -48,8 +82,6 @@ Route::delete('/replies/{reply}/favorites', 'FavoritesController@destroy');
 Route::get('/profiles/{user}', 'ProfilesController@show')->name('profile'); // named route
 Route::get('/profiles/{user}/notifications', 'UserNotificationsController@index');
 Route::delete('/profiles/{user}/notifications/{notification}', 'UserNotificationsController@destroy');
-
-Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('api/users', 'Api\UsersController@index');
 Route::post('api/users/{user}/avatar', 'Api\UserAvatarController@store')->middleware('auth')->name('avatar');

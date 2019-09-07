@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="border-bottom mb-3">
                     <avatar-form :user="{{ $profileUser }}"></avatar-form>
                 </div>

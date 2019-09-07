@@ -1,6 +1,6 @@
 <template>
     <button type="submit" :class="classes" @click="toggle">
-        <span class="oi oi-heart"></span>
+        <i class="fas fa-heart pr-2"></i>
         <span v-text="count"></span>
     </button>
 </template>

@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <div class="level">
+    <div class="mb-1">
+        <div class="level mb-2">
             <img :src="avatar" height="50" width="50" class="mr-3">
 
             <h1 v-text="user.name"></h1>

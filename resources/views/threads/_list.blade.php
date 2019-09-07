@@ -27,8 +27,9 @@
 {{--            <div class="body">{{ $thread->body }}</div>--}}
         </div>
 
-        <div class="card-footer">
-            {{ $thread->visits }} Visits
+        <div class="card-footer d-flex justify-content-between">
+            <span>{{ $thread->visits }} Visits</span>
+            <a href="/threads/{{ $thread->channel->slug }}">{{ $thread->channel->name }}</a>
         </div>
     </div>
 

@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -37,6 +38,15 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($user) {
+            $user->threads->each->delete();
+        });
+    }
 
     /**
      * make route model binding to use 'name' column instead of
@@ -72,7 +82,10 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function isAdmin()
     {
-        return in_array($this->name, ['Ritesh', 'ElonMusk']);
+        return in_array(
+            strtolower($this->email),
+            array_map('strtolower', config('odf.administrators'))
+        );
     }
 
     public function read($thread)
@@ -86,7 +99,12 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getAvatarPathAttribute($avatar)
     {
-        return asset('storage/' . ($avatar ?: 'avatars/default.png'));
+        if ($avatar) {
+            return Storage::url($avatar);
+        } else {
+            return Storage::url('avatars/default.png');
+//            return asset('storage/avatars/default.png');    // TODO: remove this line
+        }
     }
 
     public function visitedThreadCacheKey($thread)

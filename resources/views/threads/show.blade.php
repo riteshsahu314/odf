@@ -1,9 +1,5 @@
 @extends('layouts.app')
 
-@section('header')
-    <link rel="stylesheet" href="/css/vendor/jquery.atwho.css">
-@endsection
-
 @section('content')
     <thread-view :thread="{{ $thread }}" inline-template>
         <div class="container">
@@ -38,7 +34,7 @@
                 </div>
 
                 <div class="col-md-4">
-                    <div class="card">
+                    <div class="card mb-4">
                         <div class="card-body">
                             <p>
                                 This thread was published {{ $thread->created_at->diffForHumans() }} by
@@ -62,6 +58,21 @@
                             </p>
                         </div>
                     </div>
+
+                    @if(count($trending))
+                        <div class="card">
+                            <div class="card-header">
+                                Trending Threads
+                            </div>
+                            <ul class="list-group">
+                                @foreach($trending as $thread)
+                                    <li class="list-group-item">
+                                        <a href="{{ url($thread->path) }}">{{ $thread->title }}</a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

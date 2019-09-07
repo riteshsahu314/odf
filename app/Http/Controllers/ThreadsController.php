@@ -128,7 +128,10 @@ class ThreadsController extends Controller
 //            'path' => $thread->path()
 //        ]));
 
-        return view('threads.show', compact('thread'));
+        return view('threads.show', [
+            'thread' => $thread,
+            'trending' => $trending->get()
+        ]);
     }
 
     /**

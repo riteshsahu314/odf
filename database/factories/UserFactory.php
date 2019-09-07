@@ -6,6 +6,7 @@ use App\Reply;
 use App\User;
 use App\Thread;
 use App\Channel;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 
@@ -72,7 +73,26 @@ $factory->define(Thread::class, function (Faker $faker) {
     ];
 });
 
+$factory->state(App\Thread::class, 'from_existing_channels_and_users', function ($faker) {
+    $title = $faker->sentence;
+
+    return [
+        'user_id' => function () {
+            return \App\User::all()->random()->id;
+        },
+        'channel_id' => function () {
+            return \App\Channel::all()->random()->id;
+        },
+        'title' => $title,
+        'body'  => $faker->paragraph,
+        'visits' => $faker->numberBetween(0, 35),
+        'slug' => Str::slug($title),
+        'locked' => $faker->boolean(15)
+    ];
+});
+
 $factory->define(Reply::class, function (Faker $faker) {
+    $random_date = Carbon::now()->subDay(rand(0, 6));
     return [
         'thread_id' => function() {
             // create a user and grab the id
@@ -83,6 +103,23 @@ $factory->define(Reply::class, function (Faker $faker) {
             return factory('App\User')->create()->id;
         },
         'body' => $faker->paragraph,
+        'created_at' => $random_date,
+        'updated_at' => $random_date
+    ];
+});
+
+$factory->state(Reply::class, 'from_existing_threads_and_users',function (Faker $faker) {
+    $random_date = Carbon::now()->subDay(rand(0, 6));
+    return [
+        'thread_id' => function() {
+            return \App\Thread::all()->random()->id;
+        },
+        'user_id' => function() {
+            return \App\User::all()->random()->id;
+        },
+        'body' => $faker->paragraph,
+        'created_at' => $random_date,
+        'updated_at' => $random_date
     ];
 });
 

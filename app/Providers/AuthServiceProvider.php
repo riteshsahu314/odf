@@ -32,7 +32,7 @@ class AuthServiceProvider extends ServiceProvider
         // essentially granting all abilities to a specific user
         // TODO:
         Gate::before(function ($user) {
-            if ($user->name == 'SuperAdmin') {
+            if ($user->isAdmin()) {
                 return true;
             }
         });

@@ -6,6 +6,6 @@ module.exports = {
     },
 
     isAdmin() {
-        return ['Ritesh', 'ElonMusk'].includes(user.name);
+        return ['ritesh@example.com'].includes(user.email);
     }
 };

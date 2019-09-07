@@ -1,7 +1,10 @@
-<nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+<nav class="navbar navbar-expand-md navbar-light sticky-top navbar-laravel">
     <div class="container">
-        <a class="navbar-brand" href="{{ url('/') }}">
-            {{ config('app.name', 'Laravel') }}
+        <a href="{{ url('/') }}">
+            <img src="{{ Storage::url('images/logo.svg') }}" alt="Logo" class="logo-img">
+        </a>
+        <a class="navbar-brand logo-text" href="{{ url('/') }}">
+            {{ config('app.name', 'ODF') }}
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>
@@ -10,6 +13,17 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Channels
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        @foreach($channels as $channel)
+                            <a href="/threads/{{ $channel->slug }}" class="dropdown-item" title="{{ $channel->description }}">{{ $channel->name }}</a>
+                        @endforeach
+                    </div>
+                </li>
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Browse
@@ -29,17 +43,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/threads/create">New Thread</a>
                 </li>
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Channels
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        @foreach($channels as $channel)
-                            <a href="/threads/{{ $channel->slug }}" class="dropdown-item">{{ $channel->name }}</a>
-                        @endforeach
-                    </div>
-                </li>
             </ul>
 
             <!-- Right Side Of Navbar -->
@@ -55,6 +58,12 @@
                         </li>
                     @endif
                 @else
+                    @if (auth()->user()->isAdmin())
+                        <li class="nav-item">
+                            <a href="/admin" class="nav-link">Administration</a>
+                        </li>
+                    @endif
+
                     <user-notifications></user-notifications>
 
                     <li class="nav-item dropdown">
@@ -64,7 +73,7 @@
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a href="{{ route('profile', Auth::user()) }}" class="dropdown-item">My Profile</a>
-                            
+
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

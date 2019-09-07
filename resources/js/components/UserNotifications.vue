@@ -1,7 +1,8 @@
 <template>
     <li class="nav-item dropdown" v-if="notifications.length">
         <a href="#" class="nav-link" data-toggle="dropdown">
-            <span class="oi oi-bell"></span>
+            <i class="fas fa-bell"></i>
+            <span class="badge badge-danger" v-text="notifications.length"></span>
         </a>
 
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

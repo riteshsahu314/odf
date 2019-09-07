@@ -19,6 +19,7 @@
     </script>
 
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -26,7 +27,6 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.1.1/trix.css" />
 
     <style>
@@ -38,13 +38,15 @@
 
     @yield('header')
 </head>
-<body>
+<body id="page-top">
     <div id="app">
         @include('layouts.nav')
 
         <main class="py-4">
             @yield('content')
         </main>
+
+        <scroll-to target="#page-top"></scroll-to>
 
         <flash message="{{ session('flash') }}"></flash>
     </div>
