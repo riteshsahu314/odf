@@ -31,10 +31,21 @@ class DatabaseSeeder extends Seeder
     {
         User::truncate();
 
-        // create a dev user
+        // create dev users
         factory(User::class)->create([
             'name' => 'Ritesh',
             'email' => 'ritesh@example.com',
+        ]);
+
+        factory(User::class)->create([
+            'name' => 'admin_demo',
+            'email' => 'admin_demo@example.com',
+        ]);
+
+        // create normal usrs
+        factory(User::class)->create([
+            'name' => 'user_demo',
+            'email' => 'user_demo@example.com',
         ]);
 
         factory(User::class, 20)->create();
